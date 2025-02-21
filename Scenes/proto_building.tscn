@@ -181,6 +181,6 @@ light_volumetric_fog_energy = 2.455
 light_size = 1.0
 omni_range = 4096.0
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." instance=ExtResource("2_01o4h")]
+[node name="WorldEnvironment" parent="." instance=ExtResource("2_01o4h")]
 environment = SubResource("Environment_f8w8m")
 camera_attributes = SubResource("CameraAttributesPractical_qo5hu")
