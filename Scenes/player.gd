@@ -86,7 +86,7 @@ func heal_health(amount):
 	health = max(100, health)  # Prevent health being above 100
 	ui.update_health(health)
 	
-
+#Updates Health
 func _process(delta):
 	if Input.is_action_just_pressed("damage"):  # Press "H" to lose health
 		take_damage(10)
