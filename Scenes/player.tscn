@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://cnh7updnqi1y5"]
+
+[ext_resource type="Script" path="res://Scenes/player.gd" id="1_di8ql"]
+[ext_resource type="Script" path="res://Scenes/ui.gd" id="2_genpw"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1siqg"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nsdqt"]
+radius = 0.25
+height = 1.4
+
+[sub_resource type="Gradient" id="Gradient_dryke"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_atu2o"]
+gradient = SubResource("Gradient_dryke")
+width = 512
+height = 48
+
+[sub_resource type="Gradient" id="Gradient_5emy1"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i2sa3"]
+gradient = SubResource("Gradient_5emy1")
+width = 512
+height = 48
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_di8ql")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_1siqg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
+shape = SubResource("CapsuleShape3D_nsdqt")
+
+[node name="Head" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Head/Camera3D"]
+light_color = Color(1, 0, 0.482353, 1)
+
+[node name="UI" type="CanvasLayer" parent="Head/Camera3D"]
+follow_viewport_enabled = true
+script = ExtResource("2_genpw")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Head/Camera3D/UI"]
+offset_left = 318.0
+offset_top = 513.0
+offset_right = 830.0
+offset_bottom = 561.0
+value = 100.0
+texture_under = SubResource("GradientTexture2D_atu2o")
+texture_progress = SubResource("GradientTexture2D_i2sa3")

@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://drbgrjw2tgkgx"]
+
+[ext_resource type="Texture2D" uid="uid://b5yrd67jryg2p" path="res://assets/panorama_image.png" id="1_qljyq"]
+[ext_resource type="PackedScene" uid="uid://cnh7updnqi1y5" path="res://Scenes/player.tscn" id="2_ftrla"]
+[ext_resource type="PackedScene" uid="uid://bs2jm62cmkbrk" path="res://addons/instant-realistic-light/light_scene.tscn" id="4_mjl4v"]
+[ext_resource type="PackedScene" uid="uid://bmogg446l8l76" path="res://Scenes/proto_building.tscn" id="5_gygya"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0peqb"]
+panorama = ExtResource("1_qljyq")
+
+[sub_resource type="Sky" id="Sky_tyhie"]
+sky_material = SubResource("PanoramaSkyMaterial_0peqb")
+radiance_size = 2
+
+[sub_resource type="Environment" id="Environment_f8w8m"]
+background_mode = 2
+background_intensity = 100000.0
+sky = SubResource("Sky_tyhie")
+tonemap_mode = 3
+tonemap_white = 8.0
+ssao_enabled = true
+ssao_detail = 2.0
+sdfgi_enabled = true
+sdfgi_bounce_feedback = 0.9
+glow_enabled = true
+glow_normalized = true
+glow_bloom = 0.2
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+volumetric_fog_gi_inject = 1.14
+volumetric_fog_anisotropy = 0.7
+volumetric_fog_sky_affect = 0.295
+adjustment_saturation = 1.17
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_qo5hu"]
+exposure_multiplier = 3.069
+auto_exposure_scale = 0.22
+auto_exposure_speed = 0.8
+dof_blur_far_distance = 1.44
+dof_blur_near_distance = 0.01
+auto_exposure_min_sensitivity = 8.01
+
+[node name="Prototype" type="Node3D"]
+
+[node name="@WorldEnvironment@18003" parent="." instance=ExtResource("4_mjl4v")]
+environment = SubResource("Environment_f8w8m")
+camera_attributes = SubResource("CameraAttributesPractical_qo5hu")
+
+[node name="Player" parent="." instance=ExtResource("2_ftrla")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.2, 60.5, -124.2)
+
+[node name="Proto_Building" parent="." instance=ExtResource("5_gygya")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -95.1, 10.6, -105.5)
