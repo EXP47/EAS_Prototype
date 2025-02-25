@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dc7xpxpewn76e"
-path.bptc="res://.godot/imported/packed_albedo_height.png-756c58e5615830dab20942531707e322.bptc.ctex"
+path.bptc="res://.godot/imported/packed_albedo_height.png-033f67ec90839b08cd3cdcaf686a0576.bptc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://materials/packed_albedo_height.png"
-dest_files=["res://.godot/imported/packed_albedo_height.png-756c58e5615830dab20942531707e322.bptc.ctex"]
+source_file="res://Materials/packed_albedo_height.png"
+dest_files=["res://.godot/imported/packed_albedo_height.png-033f67ec90839b08cd3cdcaf686a0576.bptc.ctex"]
 
 [params]
 
