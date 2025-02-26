@@ -1,10 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://drbgrjw2tgkgx"]
+[gd_scene load_steps=11 format=3 uid="uid://drbgrjw2tgkgx"]
 
 [ext_resource type="Texture2D" uid="uid://b5yrd67jryg2p" path="res://assets/panorama_image.png" id="1_qljyq"]
-[ext_resource type="PackedScene" uid="uid://cnh7updnqi1y5" path="res://Scenes/player.tscn" id="2_ftrla"]
 [ext_resource type="PackedScene" uid="uid://bs2jm62cmkbrk" path="res://addons/instant-realistic-light/light_scene.tscn" id="4_mjl4v"]
-[ext_resource type="PackedScene" uid="uid://cel0ety3mtdtu" path="res://Scenes/enemy.tscn" id="5_4etvr"]
-[ext_resource type="PackedScene" uid="uid://bmogg446l8l76" path="res://Scenes/proto_building.tscn" id="5_gygya"]
+[ext_resource type="PackedScene" uid="uid://cel0ety3mtdtu" path="res://scenes/enemy.tscn" id="5_4etvr"]
+[ext_resource type="PackedScene" uid="uid://cnh7updnqi1y5" path="res://scenes/player.tscn" id="5_evgx8"]
+[ext_resource type="PackedScene" uid="uid://bmogg446l8l76" path="res://scenes/proto_building.tscn" id="5_gygya"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0peqb"]
 panorama = ExtResource("1_qljyq")
@@ -63,3 +63,6 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -95.1,
 [node name="Enemy" parent="." instance=ExtResource("5_4etvr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -92.198, 114.488, -130.267)
 speed = 4.0
+
+[node name="Player" parent="." instance=ExtResource("5_evgx8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.1362, 118.285, -138.576)
