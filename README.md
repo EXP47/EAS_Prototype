@@ -1,7 +1,7 @@
 
 How to Play
 
-Install Godot and import the project to play :)
+Install Godot and import the project after cloning the repo :)
 
 ---------------Credits---------------
 
