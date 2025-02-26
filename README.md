@@ -1,3 +1,10 @@
+
+How to Play
+
+Install Godot and import the project to play :)
+
+---------------Credits---------------
+
 # Godot CSG Dev Blocks
 
 ![Preview](https://i.imgur.com/BwFOU20.png)
