@@ -3,11 +3,8 @@
 [ext_resource type="Script" path="res://scenes/enemy.gd" id="1_usy4q"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_6y21g"]
-height = 1.5
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hklgi"]
-radius = 0.25
-height = 1.4
 
 [node name="Enemy" type="CharacterBody3D"]
 script = ExtResource("1_usy4q")

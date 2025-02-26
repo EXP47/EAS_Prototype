@@ -1,34 +1,45 @@
 extends CharacterBody3D
 
+@export var max_health: int = 100
+var health: int = max_health
+
+
 var speed
-const WALK_SPEED = 5.0
-const SPRINT_SPEED = 8.0
-const JUMP_VELOCITY = 4
-const SENSITIVITY = 0.004
+@export var WALK_SPEED = 4.0
+@export var SPRINT_SPEED = 8.0
+@export var CROUCHING_SPEED = 2.0
+@export var JUMP_VELOCITY = 4
+@export var SENSITIVITY = 0.004
 
 # Bob variables
-const BOB_FREQ = 2.4
-const BOB_AMP = 0.08
-var t_bob = 0.0
+@export var BOB_FREQ = 2.4
+@export var BOB_AMP = 0.08
+@export var t_bob = 0.0
 
 # FOV variables
-const BASE_FOV = 75.0
-const FOV_CHANGE = 1.5
+@export var BASE_FOV = 75.0
+@export var FOV_CHANGE = 1.5
 
 # Gravity
 var gravity = 9.8
+
+@export var ANIMATION_PLAYER : AnimationPlayer
+
 
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
 @onready var ui = $Head/Camera3D/UI  # Direct reference to UI
 
-@export var max_health: int = 100
-var health: int = max_health
+var isCrouching:= false
 
-var jumpAmt = 0
 
+#This is for getting the Camera Working
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+func _input(event):
+	if event.is_action_pressed("debug_quit"):
+		get_tree().quit()
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
@@ -44,14 +55,15 @@ func _physics_process(delta):
 	# Handle Jump
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-		jumpAmt+=1
-	if Input.is_action_just_pressed("jump") and !(is_on_floor()) and jumpAmt == 1:
-		velocity.y = JUMP_VELOCITY
-		speed = 100 
-		jumpAmt = 2
+
 	
+	
+	
+	# Determine movement speed priority
+	if Input.is_action_just_pressed("crouch"):
+		toggle_crouch()
 	# Handle Sprint
-	if Input.is_action_pressed("sprint"):
+	elif Input.is_action_pressed("sprint"):
 		speed = SPRINT_SPEED
 	else:
 		speed = WALK_SPEED
@@ -69,14 +81,11 @@ func _physics_process(delta):
 		else:
 			velocity.x = lerp(velocity.x, 0.0, delta * 7.0)
 			velocity.z = lerp(velocity.z, 0.0, delta * 7.0)
-	elif Input.is_action_just_pressed("jump") and !(is_on_floor()) and jumpAmt == 2 :
-		velocity.x = lerp(velocity.x, direction.x * speed, delta * 3.0) 
-		velocity.z = lerp(velocity.z, direction.z * speed * 100, delta * 3.0)
-		jumpAmt = 0
 	else:
 		velocity.x = lerp(velocity.x, direction.x * speed, delta * 3.0)
 		velocity.z = lerp(velocity.z, direction.z * speed, delta * 3.0)
-
+	
+	
 	# Head bobbing effect
 	t_bob += delta * velocity.length() * float(is_on_floor())
 	camera.transform.origin = _headbob(t_bob)
@@ -100,10 +109,17 @@ func heal_health(amount):
 	
 #Updates Health
 func _process(delta):
-	if Input.is_action_just_pressed("damage"):  # Press "H" to lose health
+	if Input.is_action_just_pressed("debug_damage"):  # Press "H" to lose health
 		take_damage(10)
-	if Input.is_action_just_pressed("heal"):  # Press "H" to lose health
+	if Input.is_action_just_pressed("debug_heal"):  # Press "H" to lose health
 		heal_health(10)
+
+func toggle_crouch():
+	if isCrouching == true:
+		print(isCrouching)
+	elif isCrouching == false:
+		ANIMATION_PLAYER.play("Debug_Crouch")
+	isCrouching = !isCrouching
 
 func _headbob(time) -> Vector3:
 	var pos = Vector3.ZERO

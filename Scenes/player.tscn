@@ -1,14 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cnh7updnqi1y5"]
+[gd_scene load_steps=12 format=3 uid="uid://cnh7updnqi1y5"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_di8ql"]
 [ext_resource type="Script" path="res://scripts/ui.gd" id="2_genpw"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_1siqg"]
-height = 1.5
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nsdqt"]
-radius = 0.25
-height = 1.4
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1siqg"]
 
 [sub_resource type="Gradient" id="Gradient_dryke"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -26,20 +23,109 @@ gradient = SubResource("Gradient_5emy1")
 width = 512
 height = 48
 
-[node name="Player" type="CharacterBody3D"]
-script = ExtResource("1_di8ql")
+[sub_resource type="Animation" id="Animation_ela0k"]
+resource_name = "Debug_Crouch"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1.5, 0), Vector3(0, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape3D:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1, 0), Vector3(0, 0.75, 0)]
+}
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
-mesh = SubResource("CapsuleMesh_1siqg")
+[sub_resource type="Animation" id="Animation_i5dn7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.5, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape3D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xwlps"]
+_data = {
+"Debug_Crouch": SubResource("Animation_ela0k"),
+"RESET": SubResource("Animation_i5dn7")
+}
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("ANIMATION_PLAYER")]
+script = ExtResource("1_di8ql")
+ANIMATION_PLAYER = NodePath("AnimationPlayer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_nsdqt")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_1siqg")
+skeleton = NodePath("../..")
+
 [node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
+fov = 84.6
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="Head/Camera3D"]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Head/Camera3D"]
 light_color = Color(1, 0, 0.482353, 1)
@@ -56,3 +142,8 @@ offset_bottom = 561.0
 value = 100.0
 texture_under = SubResource("GradientTexture2D_atu2o")
 texture_progress = SubResource("GradientTexture2D_i2sa3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xwlps")
+}
